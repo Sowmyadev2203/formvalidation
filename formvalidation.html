@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>College Admission Form Validation</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 20px;
+        }
+        .form-group {
+            margin-bottom: 10px;
+        }
+        .error {
+            color: red;
+            font-size: 14px;
+        }
+        .valid {
+            color: green;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+
+    <h2>College Admission Form</h2>
+
+    <form id="admissionForm">
+        <div class="form-group">
+            <label for="rollNumber">Roll Number:</label>
+            <input type="text" id="rollNumber" name="rollNumber">
+            <div id="rollNumberError" class="error"></div>
+        </div>
+        
+        <div class="form-group">
+            <label for="username">Username:</label>
+            <input type="text" id="username" name="username">
+            <div id="usernameError" class="error"></div>
+        </div>
+        
+        <div class="form-group">
+            <label for="mobileNumber">Mobile Number:</label>
+            <input type="text" id="mobileNumber" name="mobileNumber">
+            <div id="mobileNumberError" class="error"></div>
+        </div>
+        
+        <div class="form-group">
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password">
+            <div id="passwordError" class="error"></div>
+        </div>
+
+        <button type="submit">Submit</button>
+    </form>
+
+    <script>
+        
+        function validateRollNumber(rollNumber) {
+            const pattern = /^\d{2}[a-z]\d{2}[A-Z]{3}$/;
+            return pattern.test(rollNumber);
+        }
+
+        
+        function validateUsername(username) {
+            const pattern = /^[A-Za-z]+$/;
+            return pattern.test(username);
+        }
+
+        
+        function validateMobileNumber(mobileNumber) {
+            const pattern = /^\d{10}$/;
+            return pattern.test(mobileNumber);
+        }
+
+        
+        function validatePassword(password) {
+            const pattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[A-Za-z\d@$!%*?&]{8,}$/;
+            return pattern.test(password);
+        }
+
+        
+        document.getElementById('admissionForm').addEventListener('submit', function(event) {
+            event.preventDefault();  
+
+            
+            const rollNumber = document.getElementById('rollNumber').value;
+            const username = document.getElementById('username').value;
+            const mobileNumber = document.getElementById('mobileNumber').value;
+            const password = document.getElementById('password').value;
+
+            
+            document.getElementById('rollNumberError').textContent = '';
+            document.getElementById('usernameError').textContent = '';
+            document.getElementById('mobileNumberError').textContent = '';
+            document.getElementById('passwordError').textContent = '';
+
+            let isValid = true;
+
+            
+            if (!validateRollNumber(rollNumber)) {
+                document.getElementById('rollNumberError').textContent = 'Invalid roll number format (e.g., 23g21ABC).';
+                isValid = false;
+            }
+
+           
+            if (!validateUsername(username)) {
+                document.getElementById('usernameError').textContent = 'Username should only contain alphabets.';
+                isValid = false;
+            }
+
+           
+            if (!validateMobileNumber(mobileNumber)) {
+                document.getElementById('mobileNumberError').textContent = 'Mobile number should contain exactly 10 digits.';
+                isValid = false;
+            }
+
+            
+            if (!validatePassword(password)) {
+                document.getElementById('passwordError').textContent = 'Password must be at least 8 characters, with at least one uppercase letter, one lowercase letter, and one digit.';
+                isValid = false;
+            }
+
+            
+            if (isValid) {
+                alert('Form submitted successfully!');
+                
+            }
+        });
+    </script>
+
+</body>
+</html>
